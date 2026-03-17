@@ -1,0 +1,35 @@
+import java.util.Stack;
+
+public class MyStringBuilder {
+    private StringBuilder sb;
+    private Stack<String> history;
+
+    public MyStringBuilder() {
+        sb = new StringBuilder();
+        history = new Stack<>();
+    }
+
+    public MyStringBuilder append(String str) {
+        history.push(sb.toString()); // save state
+        sb.append(str);
+        return this;
+    }
+
+    public MyStringBuilder delete(int start, int end) {
+        history.push(sb.toString());
+        sb.delete(start, end);
+        return this;
+    }
+
+    public MyStringBuilder undo() {
+        if (!history.isEmpty()) {
+            sb = new StringBuilder(history.pop());
+        }
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return sb.toString();
+    }
+}
